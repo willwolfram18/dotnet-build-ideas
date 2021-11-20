@@ -1,0 +1,12 @@
+<Project>
+    <PropertyGroup>
+        <NamespacePrefix>willwolfram18.ExampleLibrary</NamespacePrefix>
+        <LangVersion>latest</LangVersion>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <Using Include="Microsoft.Extensions.Logging" />
+    </ItemGroup>
+</Project>

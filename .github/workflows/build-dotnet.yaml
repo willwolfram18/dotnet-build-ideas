@@ -1,0 +1,42 @@
+name: Build .NET
+on:
+  workflow_dispatch:
+    inputs:
+      SDK_VERSION:
+        type: string
+        required: true
+        description: The version of the .NET SDK to use when building.
+      SOLUTION_DIR:
+        type: string
+        required: true
+        description: The directory that contains the solution file to build.
+      VERSION:
+        type: string
+        required: true
+      CONTAINS_LIBRARIES:
+        type: boolean
+        required: false
+        default: false
+env:
+  BUILD_CONFIG: Release
+defaults:
+  run:
+    shell: bash
+    working-directory: ${{ inputs.SOLUTION_DIR }}
+jobs:
+  dotnet-build:
+    name: Run build and test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: ${{ inputs.SDK_VERSION }}
+      - run: dotnet build --nologo -c "${{ env.BUILD_CONFIG }}" -v queit -p:Version="${{ inputs.VERSION }}"
+      - run: dotnet test --nologo --no-build -c "${{ env.BUILD_CONFIG }}" -v quiet
+  # dotnet-pack:
+  #   needs: dotnet-build
+  #   runs-on: ubuntu-latest
+  #   steps:
+
+
