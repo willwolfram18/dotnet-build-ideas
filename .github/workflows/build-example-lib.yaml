@@ -1,0 +1,9 @@
+name: Build eample library
+on: [push, pull_request]
+jobs:
+  build:
+    uses: willwolfram18/dotnet-build-ideas/.github/workflows/build-dotnet.yaml@main
+    with:
+      SDK_VERSION: 6.0.x
+      SOLUTION_DIR: src/example-library
+      VERSION: '0.1.0'
