@@ -16,6 +16,9 @@ on:
       IS_DEPLOYABLE:
         type: boolean
         required: true
+      MY_ENV:
+        type: string
+        required: true
       CONTAINS_LIBRARIES:
         type: boolean
         required: false
