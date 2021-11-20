@@ -4,17 +4,19 @@ on:
     branches:
       - release/[0-9]+.[0-9]+.[0-9]+
 jobs:
-  deploy:
+  configure:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - name: Parse version number
         run: |
           echo "VERSION=1.3.1" >> $GITHUB_ENV
-      - uses: willwolfram18/dotnet-build-ideas/.github/workflows/build-dotnet.yaml@release/1.0.1
-        with:
-          SDK_VERSION: 6.0.x
-          SOLUTION_DIR: src/example-library
-          VERSION: ${{ env.VERSION }}
-          CONTAINS_LIBRARIES: true
-          IS_DEPLOYABLE: falsetrue
+  deploy:
+    needs: configure
+    uses: willwolfram18/dotnet-build-ideas/.github/workflows/build-dotnet.yaml@release/1.0.1
+    with:
+      SDK_VERSION: 6.0.x
+      SOLUTION_DIR: src/example-library
+      VERSION: ${{ env.VERSION }}
+      CONTAINS_LIBRARIES: true
+      IS_DEPLOYABLE: true
