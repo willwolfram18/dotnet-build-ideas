@@ -50,10 +50,4 @@ jobs:
       - name: Run dotnet pack
         if: ${{ inputs.CONTAINS_LIBRARIES }}
         run: dotnet pack --nologo --no-build -c "${{ env.BUILD_CONFIG }}" -v minimal -p:VERSION="${{ env.VERSION_NUMBER }} -o "${{ env.GITHUB_WORKSPACE }}/artifacts/packages" -p:PackageProjectUrl="${{ env.REPO_URL }}"
-  dotnet-pack:
-    needs: dotnet-build
-    runs-on: ubuntu-latest
-    steps:
-      - run: echo "${{ env.VERSION_NUMBER}}"
-
 
