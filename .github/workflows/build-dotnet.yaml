@@ -34,7 +34,9 @@ jobs:
         shell: bash
         working-directory: ${{ inputs.SOLUTION_DIR }}
     steps:
-      - run: echo "$MY_ENV"
+      - run: |
+          echo "$MY_ENV"
+          echo "${{ inputs.MY_ENV}}"
       - if: ${{ inputs.IS_DEPLOYABLE }}
         run: echo "VERSION_NUMBER=${{ inputs.VERSION }}.${{ github.run_id }}" >> $GITHUB_ENV
       - if: ${{ !inputs.IS_DEPLOYABLE }}
