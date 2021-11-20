@@ -22,7 +22,6 @@ on:
         default: false
 env:
   BUILD_CONFIG: Release
-  VERSION_NUMBER: "${{inputs.VERSION + github.run_id}}${{ inputs.IS_DEPLOYABLE ? '-rc' : '' }}"
 jobs:
   dotnet-build:
     name: Run build and test
