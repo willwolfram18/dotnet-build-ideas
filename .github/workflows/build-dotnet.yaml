@@ -49,7 +49,7 @@ jobs:
       - name: Archive test results
         uses: actions/upload-artifact@v2
         with:
-          name: dotnet-test-results
+          name: dotnet-test-results-${{ env.VERSION_NUMBER }}
           path: ${{ github.workspace }}/artifacts/test-results/*.trx
       - name: Run dotnet pack
         if: ${{ inputs.CONTAINS_LIBRARIES }}
@@ -58,7 +58,7 @@ jobs:
         if: ${{ inputs.CONTAINS_LIBRARIES }}
         uses: actions/upload-artifact@v2
         with:
-          name: library-nuget-packages
+          name: library-nuget-packages-${{ env.VERSION_NUMBER }}
           path: ${{ github.workspace }}/artifacts/packages
 
 
