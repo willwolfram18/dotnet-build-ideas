@@ -1,6 +1,6 @@
 name: Build .NET
 on:
-  workflow_dispatch:
+  workflow_call:
     inputs:
       SDK_VERSION:
         type: string
