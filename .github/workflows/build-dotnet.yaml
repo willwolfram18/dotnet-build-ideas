@@ -54,7 +54,7 @@ jobs:
           path: ${{ github.workspace }}/artifacts/test-results/*.trx
       - name: Run dotnet pack
         if: ${{ inputs.CONTAINS_LIBRARIES }}
-        run: dotnet pack --nologo --no-build -c "${{ env.BUILD_CONFIG }}" -v minimal -p:VERSION="${{ env.VERSION_NUMBER }} -o "${{ github.workspace }}/artifacts/packages" -p:PackageProjectUrl="${{ env.REPO_URL }}"
+        run: dotnet pack --nologo --no-build -c "${{ env.BUILD_CONFIG }}" -v minimal -p:VERSION="${{ env.VERSION_NUMBER }}" -o "${{ github.workspace }}/artifacts/packages" -p:PackageProjectUrl="${{ env.REPO_URL }}"
       - name: Archive library packages
         if: ${{ inputs.CONTAINS_LIBRARIES }}
         uses: actions/upload-artifact@v2
