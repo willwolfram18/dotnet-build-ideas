@@ -22,6 +22,7 @@ on:
         default: false
 env:
   BUILD_CONFIG: Release
+  DOTNET_NOLOGO: 1
 jobs:
   dotnet-build:
     runs-on: ubuntu-latest
@@ -47,9 +48,9 @@ jobs:
 
       #region Build and test
       - name: Run dotnet build
-        run: dotnet build --nologo -c "${{ env.BUILD_CONFIG }}" -v minimal -p:Version="${{ env.VERSION_NUMBER }}" -p:PackageProjectUrl="${{ env.REPO_URL }}"
+        run: dotnet build -c "${{ env.BUILD_CONFIG }}" -v minimal -p:Version="${{ env.VERSION_NUMBER }}" -p:PackageProjectUrl="${{ env.REPO_URL }}"
       - name: Run dotnet test
-        run: dotnet test --nologo --no-build -c "${{ env.BUILD_CONFIG }}" -v minimal --logger trx -r "${{ github.workspace }}/artifacts/test-results"
+        run: dotnet test --no-build -c "${{ env.BUILD_CONFIG }}" -v minimal --logger trx -r "${{ github.workspace }}/artifacts/test-results"
       - name: Archive test results
         uses: actions/upload-artifact@v2
         with:
@@ -60,7 +61,7 @@ jobs:
       #region Handle NuGet library packages
       - name: Run dotnet pack
         if: ${{ inputs.CONTAINS_LIBRARIES }}
-        run: dotnet pack --nologo --no-build -c "${{ env.BUILD_CONFIG }}" -v minimal -p:VERSION="${{ env.VERSION_NUMBER }}" -o "${{ github.workspace }}/artifacts/packages" -p:PackageProjectUrl="${{ env.REPO_URL }}"
+        run: dotnet pack --no-build -c "${{ env.BUILD_CONFIG }}" -v minimal -p:VERSION="${{ env.VERSION_NUMBER }}" -o "${{ github.workspace }}/artifacts/packages" -p:PackageProjectUrl="${{ env.REPO_URL }}"
       - name: Archive library packages
         if: ${{ inputs.CONTAINS_LIBRARIES }}
         uses: actions/upload-artifact@v2
