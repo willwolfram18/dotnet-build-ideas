@@ -46,20 +46,20 @@ jobs:
       - name: Run dotnet build
         run: dotnet build --nologo -c "${{ env.BUILD_CONFIG }}" -v minimal -p:Version="${{ env.VERSION_NUMBER }}" -p:PackageProjectUrl="${{ env.REPO_URL }}"
       - name: Run dotnet test
-        run: dotnet test --nologo --no-build -c "${{ env.BUILD_CONFIG }}" -v minimal --logger trx -r "${{ env.GITHUB_WORKSPACE }}/artifacts/test-results"
+        run: dotnet test --nologo --no-build -c "${{ env.BUILD_CONFIG }}" -v minimal --logger trx -r "${{ github.workspace }}/artifacts/test-results"
       - name: Archive test results
         uses: actions/upload-artifact@v2
         with:
           name: dotnet-test-results
-          path: ${{ env.GITHUB_WORKSPACE }}/artifacts/test-results/*.trx
+          path: ${{ github.workspace }}/artifacts/test-results/*.trx
       - name: Run dotnet pack
         if: ${{ inputs.CONTAINS_LIBRARIES }}
-        run: dotnet pack --nologo --no-build -c "${{ env.BUILD_CONFIG }}" -v minimal -p:VERSION="${{ env.VERSION_NUMBER }} -o "${{ env.GITHUB_WORKSPACE }}/artifacts/packages" -p:PackageProjectUrl="${{ env.REPO_URL }}"
+        run: dotnet pack --nologo --no-build -c "${{ env.BUILD_CONFIG }}" -v minimal -p:VERSION="${{ env.VERSION_NUMBER }} -o "${{ github.workspace }}/artifacts/packages" -p:PackageProjectUrl="${{ env.REPO_URL }}"
       - name: Archive library packages
         if: ${{ inputs.CONTAINS_LIBRARIES }}
         uses: actions/upload-artifact@v2
         with:
           name: library-nuget-packages
-          path: ${{ env.env.GITHUB_WORKSPACE }}/artifacts/packages
+          path: ${{ github.workspace }}/artifacts/packages
 
 
