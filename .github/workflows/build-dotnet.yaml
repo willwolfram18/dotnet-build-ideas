@@ -13,12 +13,16 @@ on:
       VERSION:
         type: string
         required: true
+      IS_DEPLOYABLE:
+        type: boolean
+        required: true
       CONTAINS_LIBRARIES:
         type: boolean
         required: false
         default: false
 env:
   BUILD_CONFIG: Release
+  VERSION_NUMBER: "${{inputs.VERSION + github.run_id}}${{ inputs.IS_DEPLOYABLE ? '-rc' : '' }}"
 jobs:
   dotnet-build:
     name: Run build and test
@@ -28,6 +32,7 @@ jobs:
         shell: bash
         working-directory: ${{ inputs.SOLUTION_DIR }}
     steps:
+      - run: echo "Version is ${{ env.VERSION_NUMBER }}"
       - uses: actions/checkout@v2
       - uses: actions/setup-dotnet@v1
         with:
