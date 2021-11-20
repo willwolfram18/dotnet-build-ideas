@@ -29,6 +29,7 @@ jobs:
       run:
         working-directory: ${{ inputs.SOLUTION_DIR }}
     steps:
+      #region Configure
       - uses: actions/checkout@v2
       - name: Set common environment variables
         run: |
@@ -42,6 +43,9 @@ jobs:
       - uses: actions/setup-dotnet@v1
         with:
           dotnet-version: ${{ inputs.SDK_VERSION }}
+      #endregion
+
+      #region Build and test
       - name: Run dotnet build
         run: dotnet build --nologo -c "${{ env.BUILD_CONFIG }}" -v minimal -p:Version="${{ env.VERSION_NUMBER }}" -p:PackageProjectUrl="${{ env.REPO_URL }}"
       - name: Run dotnet test
@@ -51,6 +55,9 @@ jobs:
         with:
           name: dotnet-test-results-${{ env.VERSION_NUMBER }}
           path: ${{ github.workspace }}/artifacts/test-results/*.trx
+      #endregion
+
+      #region Handle NuGet library packages
       - name: Run dotnet pack
         if: ${{ inputs.CONTAINS_LIBRARIES }}
         run: dotnet pack --nologo --no-build -c "${{ env.BUILD_CONFIG }}" -v minimal -p:VERSION="${{ env.VERSION_NUMBER }}" -o "${{ github.workspace }}/artifacts/packages" -p:PackageProjectUrl="${{ env.REPO_URL }}"
@@ -60,5 +67,9 @@ jobs:
         with:
           name: library-nuget-packages-${{ env.VERSION_NUMBER }}
           path: ${{ github.workspace }}/artifacts/packages
+      - name: Publish packages
+        if: ${{ inputs.IS_DEPLOYABLE }}
+        run: echo "Pretend I published the packages"
+      #endregion
 
 
