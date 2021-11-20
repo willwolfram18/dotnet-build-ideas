@@ -11,7 +11,7 @@ jobs:
       - name: Parse version number
         run: |
           echo "VERSION=1.3.1" >> $GITHUB_ENV
-      - uses: ./.github/workflows/build-dotnet.yaml
+      - uses: willwolfram18/dotnet-build-ideas/.github/workflows/build-dotnet.yaml@release/1.0.1
         with:
           SDK_VERSION: 6.0.x
           SOLUTION_DIR: src/example-library
