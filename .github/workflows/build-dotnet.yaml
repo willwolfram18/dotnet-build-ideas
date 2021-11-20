@@ -43,9 +43,12 @@ jobs:
       - uses: actions/setup-dotnet@v1
         with:
           dotnet-version: ${{ inputs.SDK_VERSION }}
-      - run: dotnet build --nologo -c "${{ env.BUILD_CONFIG }}" -v minimal -p:Version="${{ env.VERSION_NUMBER }}" -p:PackageProjectUrl="${{ env.REPO_URL }}"
-      - run: dotnet test --nologo --no-build -c "${{ env.BUILD_CONFIG }}" -v minimal
-      - if: ${{ inputs.CONTAINS_LIBRARIES }}
+      - name: Run dotnet build
+        run: dotnet build --nologo -c "${{ env.BUILD_CONFIG }}" -v minimal -p:Version="${{ env.VERSION_NUMBER }}" -p:PackageProjectUrl="${{ env.REPO_URL }}"
+      - name: Run dotnet test
+        run: dotnet test --nologo --no-build -c "${{ env.BUILD_CONFIG }}" -v minimal
+      - name: Run dotnet pack
+        if: ${{ inputs.CONTAINS_LIBRARIES }}
         run: dotnet pack --nologo --no-build -c "${{ env.BUILD_CONFIG }}" -v minimal -p:VERSION="${{ env.VERSION_NUMBER }} -o "${{ env.GITHUB_WORKSPACE }}/artifacts/packages" -p:PackageProjectUrl="${{ env.REPO_URL }}"
   dotnet-pack:
     needs: dotnet-build
