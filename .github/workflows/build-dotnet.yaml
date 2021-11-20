@@ -16,9 +16,6 @@ on:
       IS_DEPLOYABLE:
         type: boolean
         required: true
-      MY_ENV:
-        type: string
-        required: true
       CONTAINS_LIBRARIES:
         type: boolean
         required: false
@@ -34,13 +31,12 @@ jobs:
         shell: bash
         working-directory: ${{ inputs.SOLUTION_DIR }}
     steps:
-      - run: |
-          echo "$MY_ENV"
-          echo "${{ inputs.MY_ENV}}"
       - if: ${{ inputs.IS_DEPLOYABLE }}
-        run: echo "VERSION_NUMBER=${{ inputs.VERSION }}.${{ github.run_id }}" >> $GITHUB_ENV
+        run: |
+          echo "VERSION_NUMBER=${{ inputs.VERSION }}.${{ github.run_id }}" >> $GITHUB_ENV
       - if: ${{ !inputs.IS_DEPLOYABLE }}
-        run: echo "VERSION_NUMBER=${{ inputs.VERSION}}-rc.${{ github.run_id }}" >> $GITHUB_ENV
+        run: |
+          echo "VERSION_NUMBER=${{ inputs.VERSION}}-rc.${{ github.run_id }}" >> $GITHUB_ENV
       - uses: actions/checkout@v2
       - uses: actions/setup-dotnet@v1
         with:

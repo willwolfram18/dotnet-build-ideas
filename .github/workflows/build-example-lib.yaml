@@ -8,4 +8,3 @@ jobs:
       SOLUTION_DIR: src/example-library
       VERSION: '0.1.0'
       IS_DEPLOYABLE: false
-      MY_ENV: $GITHUB_ENV
