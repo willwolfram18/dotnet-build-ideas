@@ -34,7 +34,7 @@ jobs:
       - name: Set common environment variables
         run: |
         echo "REPO_URL=\"${{ env.GITHUB_SERVER }}${{ env.GITHUB_REPOSITORY }}\"" >> $GITHUB_ENV
-      - name: Set pre-release version
+      - name: Set RC version
         if: ${{ inputs.IS_DEPLOYABLE }}
         run: echo "VERSION_NUMBER=${{ inputs.VERSION }}.${{ github.run_id }}" >> $GITHUB_ENV
       - name: Set version
