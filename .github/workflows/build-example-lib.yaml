@@ -7,4 +7,5 @@ jobs:
       SDK_VERSION: 6.0.x
       SOLUTION_DIR: src/example-library
       VERSION: '0.1.0'
+      CONTAINS_LIBRARIES: true
       IS_DEPLOYABLE: false
